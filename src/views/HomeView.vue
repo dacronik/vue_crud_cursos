@@ -1,18 +1,39 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <v-container>
+      <v-row>
+        <v-col cols="12" md="4" lg="4" v-for="curso in cursos" :key="curso.id">
+          <card-cursos :curso="curso"/>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import CardCursos from '@/components/CardCursos.vue';
+import { mapState } from 'vuex';
 export default {
-  name: 'HomeView',
+  name: 'Home-View',
+  // props: {},
+  data: function(){
+    return {}
+  },
+  computed: {
+    ...mapState(['cursos'])
+  },
+  //methods: {}
+  // watch: {},
   components: {
-    HelloWorld
-  }
+    'card-cursos':CardCursos
+  },
+  // mixins: [],
+  // filters: {},
+  // -- Lifecycle Methods
+  // -- End Lifecycle Methods
 }
 </script>
+
+<style scoped>
+  
+</style>
