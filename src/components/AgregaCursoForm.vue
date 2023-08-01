@@ -34,7 +34,7 @@
         <v-text-field
           v-model="inscritos"
           :readonly="loading"
-          :rules="[required]"
+          :rules="[required,inscritosValidos]"
           class="mb-2"
           clearable
           label="inscritos en el curso"
@@ -127,7 +127,12 @@ export default {
         required(v){
             return !!v || 'Campo es requerido'
         },
-
+        inscritosValidos(v){
+          if(parseInt(v)>this.cupos){
+            return 'La cantidad de inscritos no puedes ser mayor a la cantidad de cupos disponibles'
+          }
+          return true;
+        },
         addCurso(){
             let newCurso ={
                 nombre: this.nombre,
