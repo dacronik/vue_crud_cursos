@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import { v4 as uuid } from 'uuid'
 
 export default createStore({
   state: {
@@ -77,8 +78,53 @@ export default createStore({
       }
     ]
   },
-  getters: {},
-  mutations: {},
-  actions: {},
+  getters: {
+    alumnosPermitidos: function(state){ 
+      let totalCupos =state.cursos.reduce((acumulador, cursos)=>acumulador+cursos.cupos,0)
+      return totalCupos
+    },
+    alumnosInscritos: function(state){
+      let totalAlumnosInscritos = state.cursos.reduce((total,cursos)=>total+cursos.inscritos,0)
+      return totalAlumnosInscritos
+    },
+    cursosTerminados: function(state){
+      let terminados = state.cursos.filter(curso=>curso.completado == true)
+      return terminados.length
+    },
+    totalCursos: function(state){
+      let activos = state.cursos.length
+      return activos  
+    },
+    getCursoById: (state) => (id) => {
+      return state.cursos.find(curso => curso.id == id)
+    }
+  },
+  mutations: {
+    ADD_CURSO:(state, newCurso)=>{
+      newCurso.id = uuid()//Math.floor(Math.random()*1000)
+      state.cursos.push(newCurso)
+    },
+    REMOVE_CURSO:(state,id)=>{
+      let index = state.cursos.findIndex(prod=>prod.id == id);
+      state.cursos.splice(index,1)
+    },
+    EDITAR_CURSO:(state,newCurso)=>{
+      console.log(newCurso)
+      let index = state.cursos.findIndex(prod=>prod.id == newCurso.id);
+      console.log(index)
+      state.cursos.splice(index,1,newCurso)
+    },
+  },
+  actions: {
+    addCurso:({commit},newCurso)=>{
+      commit('ADD_CURSO',newCurso)
+    },
+    removeCurso:({commit},id)=>{
+      commit('REMOVE_CURSO',id)
+    },
+    editarCursoConfirm:({commit},newCurso)=>{
+      commit('EDITAR_CURSO',newCurso)
+    }
+  },
   modules: {},
 });

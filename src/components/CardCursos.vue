@@ -24,7 +24,7 @@
             >
               <div class="mb-4">
                 <div class="font-weight-normal">
-                    Costo: <strong>{{ curso.costo }}</strong>
+                    Costo: <strong>${{ curso.costo.toLocaleString('es-CL') }}</strong>
                 </div>
                 <div>Duracion: {{ curso.duracion }}</div>
               </div>
@@ -56,7 +56,7 @@
 
             <v-timeline-item
               size="x-small"
-              :dot-color="colors[0]"
+              :dot-color="colors[1]"
             >
               <div class="mb-4">
                 <div class="font-weight-normal">
@@ -85,27 +85,7 @@ export default {
     },
     data: function(){
         return {
-            messages: [
-        {
-          from: 'You',
-          message: `Sure, I'll see you later.`,
-          time: '10:42am',
-          color: 'deep-purple-lighten-1',
-        },
-        {
-          from: 'John Doe',
-          message: 'Yeah, sure. Does 1:00pm work?',
-          time: '10:37am',
-          color: 'green',
-        },
-        {
-          from: 'You',
-          message: 'Did you still want to grab lunch today?',
-          time: '9:47am',
-          color: 'deep-purple-lighten-1',
-        },
-      ],
-      colors:['deep-purple-lighten-1','green']
+            colors:['deep-purple-lighten-1','green']
         }
     },
     computed: {

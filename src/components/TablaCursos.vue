@@ -30,18 +30,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="curso in cursos" :key="curso.id">
+                <tr v-for="curso in listaCursos" :key="curso.id">
                     <td>{{ curso.nombre }}</td>
                     <td>{{ curso.cupos }}</td>
                     <td>{{ curso.inscritos }}</td>
                     <td>{{ curso.duracion }}</td>
-                    <td class="bg-green">${{ curso.costo }}</td>
-                    <td v-if="curso.completado == true">Sí</td>
-                    <td v-else>No</td>
-                    <td>{{ curso.fecha_registro }}</td>
+                    <td class="text-center"><p class="bg-green rounded-pill pa-2">${{ curso.costo.toLocaleString('es-CL') }}</p></td>
+                    <td v-if="curso.completado == true" class="text-center px-10"><p class="bg-info rounded-pill">Si</p></td>
+                    <td v-else class="text-center px-10"><p class="bg-blue-grey-lighten-2 rounded-pill">No</p></td>
+                    <td class="text-center"><p class="bg-green rounded-pill pa-2">{{ curso.fecha_registro }}</p></td>
                     <td>
-                        <v-icon color="yellow">mdi-pencil</v-icon>
-                        <v-icon color="red">mdi-delete</v-icon>
+                        <div class="d-flex justify-space-around">
+                            <v-icon color="yellow" @click="editarCurso(curso.id)">mdi-pencil</v-icon>
+                            <v-icon color="red" @click="eliminarCurso(curso.id)">mdi-delete</v-icon>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -53,20 +55,26 @@
 export default {
     name: 'tabla-curso-comp',
     props: {
-        cursos:{
+        listaCursos:{
             type:Object,
             required:true
         }
     },
     data: function () {
-        return {
+         return {
+         }
+     },
+    // computed: {},
+    methods: {
+        eliminarCurso(id){
+                this.$emit('eliminarCurso',id);
+            },
+        editarCurso(id){
+            this.$emit('editarCurso',id);
         }
     },
-    computed: {
-        },
-    methods: {
         
-    }
+}
 
     
     // watch: {},
@@ -75,7 +83,7 @@ export default {
     // filters: {},
     // -- Lifecycle Methods
     // -- End Lifecycle Methods
-}
+
 </script>
 
 <style scoped></style>
